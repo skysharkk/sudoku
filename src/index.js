@@ -1,7 +1,3 @@
-module.exports = function solveSudoku(matrix) {
-
-}
-
 function extractEmptyPosition (matrix) {
 
     let emptyPosition = [];
@@ -58,24 +54,46 @@ function checkSquare (matrix, column, row, value) {
     return true;
 }
 
-
 function checker(matrix, column, row, value) {
 
         return checkRow (matrix, row, value) && checkColumn (matrix, column, value) && checkSquare(matrix, column, row, value);
 }
 
-const initial = [
-    [6, 5, 0, 7, 3, 0, 0, 8, 0],
-    [0, 0, 0, 4, 8, 0, 5, 3, 0],
-    [8, 4, 0, 9, 2, 5, 0, 0, 0],
-    [0, 9, 0, 8, 0, 0, 0, 0, 0],
-    [5, 3, 0, 2, 0, 9, 6, 0, 0],
-    [0, 0, 6, 0, 0, 0, 8, 0, 0],
-    [0, 0, 9, 0, 0, 0, 0, 0, 6],
-    [0, 0, 7, 0, 0, 0, 0, 5, 0],
-    [1, 6, 5, 3, 9, 0, 4, 7, 0]
-];
+module.exports = function solveSudoku(matrix) {
 
-let res = checker (initial, 1, 1, 2);
+    let emptyPosition = extractEmptyPosition (matrix);
 
-console.log(res);
+    for (let i = 0; i < emptyPosition.length;) {
+
+        let row = emptyPosition[i][0];
+        let column = emptyPosition[i][1];
+        let value = matrix[row][column] + 1;
+        let status = false;
+
+        while (!status && value <= 9) {
+
+            if (checker(matrix, column, row, value)) {
+
+                matrix[row][column] = value;
+                i++;
+                status = true;
+            } else {
+
+                value++;
+            }
+        }
+
+        if (!status) {
+
+            matrix[row][column] = 0;
+            i--;
+        }
+    }
+
+    return matrix;
+}
+
+
+
+
+
