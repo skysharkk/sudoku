@@ -45,9 +45,23 @@ function checkSquare (matrix, column, row, value) {
         startColumnIndexSquare += sizeSquare;
     }
 
+    for (let i = startRowIndexSquare; i < startRowIndexSquare + sizeSquare; i++) {
 
-    console.log(startRowIndexSquare);
-    console.log(startColumnIndexSquare);
+        for (let j = startColumnIndexSquare; j < startColumnIndexSquare + sizeSquare; j++) {
+
+            if (matrix[i][j] === value) {
+
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+function checker(matrix, column, row, value) {
+
+        return checkRow (matrix, row, value) && checkColumn (matrix, column, value) && checkSquare(matrix, column, row, value);
 }
 
 const initial = [
@@ -62,4 +76,6 @@ const initial = [
     [1, 6, 5, 3, 9, 0, 4, 7, 0]
 ];
 
-checkSquare (initial, 8, 1, 2);
+let res = checker (initial, 1, 1, 2);
+
+console.log(res);
